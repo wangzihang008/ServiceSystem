@@ -16,7 +16,7 @@ public class ServiceDao {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Service get(int id) {
+	public Service get(long id) {
 		EntityManager em = emf.createEntityManager();
 		Service service = em.find(Service.class, id);
 		em.close();
@@ -24,7 +24,7 @@ public class ServiceDao {
 		
 	}
 
-	public void update(int id, Service service) {
+	public void update(long id, Service service) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
 		et.begin();
@@ -50,7 +50,7 @@ public class ServiceDao {
 		
 	}
 
-	public void delete(int id) {
+	public void delete(long id) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
 		et.begin();

@@ -20,11 +20,12 @@ public class OrderDaoTest {
 		when(EMF.createEntityManager()).thenReturn(EM);
 		
 		OrderDao orderDao = new OrderDao(EMF);
-		orderDao.get(123);
+		long orderId = 123;
+		orderDao.get(orderId);
 		
 		InOrder order = inOrder(EMF, EM);
 		order.verify(EMF).createEntityManager();
-		order.verify(EM).find(Order.class, 123);
+		order.verify(EM).find(Order.class, orderId);
 		order.verify(EM).close();
 	}
 	
@@ -59,10 +60,11 @@ public class OrderDaoTest {
 		
 		when(EMF.createEntityManager()).thenReturn(EM);
 		when(EM.getTransaction()).thenReturn(ET);
-		when(EM.find(Order.class, 123)).thenReturn(order);
+		long orderId = 123;
+		when(EM.find(Order.class, orderId)).thenReturn(order);
 		
 		OrderDao orderDao = new OrderDao(EMF);
-		orderDao.update(123, order);
+		orderDao.update(orderId, order);
 		
 		InOrder inorder = inOrder(EMF, EM, ET, order);
 		inorder.verify(EMF).createEntityManager();
@@ -86,16 +88,17 @@ public class OrderDaoTest {
 		
 		when(EMF.createEntityManager()).thenReturn(EM);
 		when(EM.getTransaction()).thenReturn(ET);
-		when(EM.find(Order.class, 123)).thenReturn(order);
+		long orderId = 123;
+		when(EM.find(Order.class, orderId)).thenReturn(order);
 		
 		OrderDao orderDao = new OrderDao(EMF);
-		orderDao.delete(123);
+		orderDao.delete(orderId);
 		
 		InOrder inorder = inOrder(EMF, EM, ET);
 		inorder.verify(EMF).createEntityManager();
 		inorder.verify(EM).getTransaction();
 		inorder.verify(ET).begin();
-		inorder.verify(EM).find(Order.class, 123);
+		inorder.verify(EM).find(Order.class, orderId);
 		inorder.verify(EM).remove(order);
 		inorder.verify(ET).commit();
 		inorder.verify(EM).close();

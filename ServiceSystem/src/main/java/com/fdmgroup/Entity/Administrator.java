@@ -11,11 +11,14 @@ import javax.persistence.TableGenerator;
 @Table(name = "admin")
 public class Administrator {
 	@Id
-	@TableGenerator(name = "admin_gen", 
-			table = "admin", 
-			allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.TABLE, 
-			generator = "admin_gen")
+//	@TableGenerator(name = "admin_gen", 
+//			table = "admin",
+//			pkColumnName = "admin_id", 
+//			valueColumnName = "admin_id",
+//			allocationSize = 1)
+//	@GeneratedValue(strategy = GenerationType.TABLE, 
+//			generator = "admin_gen")
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long admin_id;
 	private String username;
 	private String password;
@@ -61,6 +64,16 @@ public class Administrator {
 	
 	public Administrator() {
 		super();
+	}
+	
+	public Administrator(String username, String password, String first_name, String last_name,
+			String status) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.status = status;
 	}
 	@Override
 	public int hashCode() {

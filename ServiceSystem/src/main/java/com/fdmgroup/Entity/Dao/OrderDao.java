@@ -14,7 +14,7 @@ public class OrderDao {
 		this.emf = emf;
 	}
 
-	public Order get(int id) {
+	public Order get(long id) {
 		EntityManager em = emf.createEntityManager();
 		Order order = em.find(Order.class, id);
 		em.close();
@@ -30,7 +30,7 @@ public class OrderDao {
 		em.close();
 	}
 	
-	public void update(int id, Order order) {
+	public void update(long id, Order order) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
 		et.begin();
@@ -44,7 +44,7 @@ public class OrderDao {
 		em.close();
 	}
 
-	public void delete(int id) {
+	public void delete(long id) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
 		et.begin();

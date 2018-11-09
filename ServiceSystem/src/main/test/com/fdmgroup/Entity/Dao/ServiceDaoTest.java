@@ -20,11 +20,12 @@ public class ServiceDaoTest {
 		when(EMF.createEntityManager()).thenReturn(EM);
 		
 		ServiceDao serviceDao = new ServiceDao(EMF);
-		serviceDao.get(123);
+		long serviceId = 123;
+		serviceDao.get(serviceId);
 		
 		InOrder order = inOrder(EMF, EM);
 		order.verify(EMF).createEntityManager();
-		order.verify(EM).find(Service.class, 123);
+		order.verify(EM).find(Service.class, serviceId);
 		order.verify(EM).close();
 	}
 	
@@ -60,10 +61,11 @@ public class ServiceDaoTest {
 		
 		when(EMF.createEntityManager()).thenReturn(EM);
 		when(EM.getTransaction()).thenReturn(ET);
-		when(EM.find(Service.class, 123)).thenReturn(service);
+		long serviceId = 123;
+		when(EM.find(Service.class, serviceId)).thenReturn(service);
 		
 		ServiceDao serviceDao = new ServiceDao(EMF);
-		serviceDao.update(123, service);
+		serviceDao.update(serviceId, service);
 		
 		InOrder order = inOrder(EMF, EM, ET, service);
 		order.verify(EMF).createEntityManager();
@@ -88,16 +90,17 @@ public class ServiceDaoTest {
 		
 		when(EMF.createEntityManager()).thenReturn(EM);
 		when(EM.getTransaction()).thenReturn(ET);
-		when(EM.find(Service.class, 123)).thenReturn(service);
+		long serviceId = 123;
+		when(EM.find(Service.class, serviceId)).thenReturn(service);
 		
 		ServiceDao serviceDao = new ServiceDao(EMF);
-		serviceDao.delete(123);
+		serviceDao.delete(serviceId);
 		
 		InOrder order = inOrder(EMF, EM, ET);
 		order.verify(EMF).createEntityManager();
 		order.verify(EM).getTransaction();
 		order.verify(ET).begin();
-		order.verify(EM).find(Service.class, 123);
+		order.verify(EM).find(Service.class, serviceId);
 		order.verify(EM).remove(service);
 		order.verify(ET).commit();
 		order.verify(EM).close();

@@ -12,11 +12,12 @@ import javax.persistence.TableGenerator;
 @Entity
 public class Vendor {
 	@Id
-	@TableGenerator(name = "vendor_gen", 
-		table = "vendor",
-		allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.TABLE, 
-		generator = "vendor_gen")
+//	@TableGenerator(name = "vendor_gen", 
+//		table = "vendor",
+//		allocationSize = 1)
+//	@GeneratedValue(strategy = GenerationType.TABLE, 
+//		generator = "vendor_gen")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int vendor_id;
 	private int verification;
 	private String address;
@@ -34,6 +35,21 @@ public class Vendor {
 	public Vendor() {
 		super();
 	}
+	
+	public Vendor(int verification, String address, String phone_number, String status, String vendor_first_name,
+			String vendor_middle_name, String vendor_last_name, String store_name, String store_url) {
+		super();
+		this.verification = verification;
+		this.address = address;
+		this.phone_number = phone_number;
+		this.status = status;
+		this.vendor_first_name = vendor_first_name;
+		this.vendor_middle_name = vendor_middle_name;
+		this.vendor_last_name = vendor_last_name;
+		this.store_name = store_name;
+		this.store_url = store_url;
+	}
+
 	public int getVendor_id() {
 		return vendor_id;
 	}

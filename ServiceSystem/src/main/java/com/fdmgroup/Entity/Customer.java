@@ -14,18 +14,19 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name = "service_website_customer")
 public class Customer {
+	
+//	@TableGenerator(name = "customer_gen", 
+//		table = "customer",
+//		allocationSize = 1)
+//	@GeneratedValue(strategy = GenerationType.TABLE, 
+//		generator = "customer_gen")
 	@Id
-	@TableGenerator(name = "customer_gen", 
-		table = "customer",
-		allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.TABLE, 
-		generator = "customer_gen")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long customer_id;
 	@Column(unique=true)
 	private String username;
@@ -54,6 +55,18 @@ public class Customer {
 		super();
 	}
 	
+	public Customer(String username, String password, String email, String status, Calendar create_date_time,
+			Calendar last_log_date_time, Calendar last_updated_time) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.status = status;
+		this.create_date_time = create_date_time;
+		this.last_log_date_time = last_log_date_time;
+		this.last_updated_time = last_updated_time;
+	}
+
 	public long getCustomer_id() {
 		return customer_id;
 	}

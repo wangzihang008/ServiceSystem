@@ -20,11 +20,12 @@ public class VendorDaoTest {
 		when(EMF.createEntityManager()).thenReturn(EM);
 		
 		VendorDao vendorDao = new VendorDao(EMF);
-		vendorDao.get(123);
+		long vendorId = 123;
+		vendorDao.get(vendorId);
 		
 		InOrder order = inOrder(EMF, EM);
 		order.verify(EMF).createEntityManager();
-		order.verify(EM).find(Vendor.class, 123);
+		order.verify(EM).find(Vendor.class, vendorId);
 		order.verify(EM).close();
 	}
 	
@@ -60,10 +61,11 @@ public class VendorDaoTest {
 		
 		when(EMF.createEntityManager()).thenReturn(EM);
 		when(EM.getTransaction()).thenReturn(ET);
-		when(EM.find(Vendor.class, 123)).thenReturn(vendor);
+		long vendorId = 123;
+		when(EM.find(Vendor.class, vendorId)).thenReturn(vendor);
 		
 		VendorDao vendorDao = new VendorDao(EMF);
-		vendorDao.update(123, vendor);
+		vendorDao.update(vendorId, vendor);
 		
 		InOrder order = inOrder(EMF, EM, ET, vendor);
 		order.verify(EMF).createEntityManager();
@@ -92,16 +94,17 @@ public class VendorDaoTest {
 		
 		when(EMF.createEntityManager()).thenReturn(EM);
 		when(EM.getTransaction()).thenReturn(ET);
-		when(EM.find(Vendor.class, 123)).thenReturn(vendor);
+		long vendorId = 123;
+		when(EM.find(Vendor.class, vendorId)).thenReturn(vendor);
 		
 		VendorDao vendorDao = new VendorDao(EMF);
-		vendorDao.delete(123);
+		vendorDao.delete(vendorId);
 		
 		InOrder order = inOrder(EMF, EM, ET);
 		order.verify(EMF).createEntityManager();
 		order.verify(EM).getTransaction();
 		order.verify(ET).begin();
-		order.verify(EM).find(Vendor.class, 123);
+		order.verify(EM).find(Vendor.class, vendorId);
 		order.verify(EM).remove(vendor);
 		order.verify(ET).commit();
 		order.verify(EM).close();

@@ -17,39 +17,26 @@ import org.apache.commons.codec.digest.DigestUtils;
 import com.fdmgroup.Entity.Customer;
 import com.fdmgroup.Entity.Dao.CustomerDao;
 
-public class LoginServlet extends HttpServlet{
-	
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		RequestDispatcher rd = req.getRequestDispatcher("login.jsp");
-		rd.forward(req, resp);		
-	}
-	
+public class ResetPersonalInfoServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String username = req.getParameter("username");
+		String email = req.getParameter("email");
 		String password = DigestUtils.md5Hex(req.getParameter("password"));
 		
-		req.setAttribute("luck_numbers", new int [] {1, 4, 6, 2, 7, 8, 3});
-		
-		// better to call a login service class here
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EMF");
 		CustomerDao cd = new CustomerDao(emf);
-		Customer customer = cd.getByUsernameAndPassword(username, password);
 		HttpSession session = req.getSession();
-		RequestDispatcher rd = req.getRequestDispatcher("WEB-INF/views/dashboard.jsp");
-		if(session.getAttribute("active_user_id") != null) {
-			
-		}else if(customer != null) {
-			session.setAttribute("LoginStatus", "success");
-			session.setAttribute("active_user_id", customer.getCustomer_id());
-			session.setAttribute("active_user_name", customer.getUsername());
-			session.setAttribute("active_user_email", customer.getEmail());
+		RequestDispatcher rd = req.getRequestDispatcher("WEB-INF/views/register.jsp");
+		if("".equals(username) && "".equals(email) && "".equals(password)) {
+			session.setAttribute("RegisterStatus", "missing");
+		}else if(cd.getByUsernameOrEmail(username, email).size() < 1) {
+			session.setAttribute("RegisterStatus", "success");
 			Calendar calendar = Calendar.getInstance();
-			customer.setLast_log_date_time(calendar);
-			cd.update(customer.getCustomer_id(), customer);
+			Customer customer = new Customer(username, password, email, "active", calendar, calendar, calendar);
+			cd.add(customer);
 		}else {
-			session.setAttribute("LoginStatus", "fail");
+			session.setAttribute("RegisterStatus", "fail");
 		}
 		
 		rd.forward(req, resp);

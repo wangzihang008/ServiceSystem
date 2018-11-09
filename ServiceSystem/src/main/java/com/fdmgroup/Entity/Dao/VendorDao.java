@@ -16,10 +16,10 @@ public class VendorDao {
 
 	/**
 	 * 
-	 * @param id
+	 * @param long
 	 * @return vendor by id
 	 */
-	public Vendor get(int id) {
+	public Vendor get(long id) {
 		EntityManager em = emf.createEntityManager();
 		Vendor vendor = em.find(Vendor.class, id);
 		em.close();
@@ -45,7 +45,7 @@ public class VendorDao {
 	 * @param id
 	 * @param vendor
 	 */
-	public void update(int id, Vendor vendor) {
+	public void update(long id, Vendor vendor) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
 		et.begin();
@@ -65,7 +65,7 @@ public class VendorDao {
 		
 	}
 
-	public void delete(int id) {
+	public void delete(long id) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
 		et.begin();

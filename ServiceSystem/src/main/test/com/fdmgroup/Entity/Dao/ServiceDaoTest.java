@@ -6,20 +6,34 @@ import javax.persistence.EntityTransaction;
 
 import static org.mockito.Mockito.*;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InOrder;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import com.fdmgroup.Entity.Service;
 
 public class ServiceDaoTest {
+	@Mock // same as = mock(EntityManagerFactory.class)
+	private EntityManagerFactory EMF;
+	@InjectMocks
+	private ServiceDao serviceDao = new ServiceDao();
+	
+	@Before
+	public void startInjectionMock() {
+		MockitoAnnotations.initMocks(this);
+	}
+	
 	@Test
 	public void Given_ServiceDao_When_getService_returnServiceAndCleansUpResources() {
-		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
+//		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
 		EntityManager EM = mock(EntityManager.class);
 		
 		when(EMF.createEntityManager()).thenReturn(EM);
 		
-		ServiceDao serviceDao = new ServiceDao(EMF);
+//		ServiceDao serviceDao = new ServiceDao(EMF);
 		long serviceId = 123;
 		serviceDao.get(serviceId);
 		
@@ -31,7 +45,7 @@ public class ServiceDaoTest {
 	
 	@Test
 	public void Given_ServiceDao_When_addService_CleansUpResources() {
-		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
+//		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
 		EntityManager EM = mock(EntityManager.class);
 		EntityTransaction ET = mock(EntityTransaction.class);
 		Service service = mock(Service.class);
@@ -39,7 +53,7 @@ public class ServiceDaoTest {
 		when(EMF.createEntityManager()).thenReturn(EM);
 		when(EM.getTransaction()).thenReturn(ET);
 		
-		ServiceDao serviceDao = new ServiceDao(EMF);
+//		ServiceDao serviceDao = new ServiceDao(EMF);
 		serviceDao.add(service);
 		
 		InOrder order = inOrder(EMF, EM, ET);
@@ -53,7 +67,7 @@ public class ServiceDaoTest {
 	
 	@Test
 	public void Given_ServiceDao_When_updateService_CleansUpResources() {
-		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
+//		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
 		EntityManager EM = mock(EntityManager.class);
 		EntityTransaction ET = mock(EntityTransaction.class);
 		Service service = mock(Service.class);
@@ -64,7 +78,7 @@ public class ServiceDaoTest {
 		long serviceId = 123;
 		when(EM.find(Service.class, serviceId)).thenReturn(service);
 		
-		ServiceDao serviceDao = new ServiceDao(EMF);
+//		ServiceDao serviceDao = new ServiceDao(EMF);
 		serviceDao.update(serviceId, service);
 		
 		InOrder order = inOrder(EMF, EM, ET, service);
@@ -83,7 +97,7 @@ public class ServiceDaoTest {
 	
 	@Test
 	public void Given_ServiceDao_When_deleteService_CleansUpResources() {
-		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
+//		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
 		EntityManager EM = mock(EntityManager.class);
 		EntityTransaction ET = mock(EntityTransaction.class);
 		Service service = mock(Service.class);
@@ -93,15 +107,15 @@ public class ServiceDaoTest {
 		long serviceId = 123;
 		when(EM.find(Service.class, serviceId)).thenReturn(service);
 		
-		ServiceDao serviceDao = new ServiceDao(EMF);
+//		ServiceDao serviceDao = new ServiceDao(EMF);
 		serviceDao.delete(serviceId);
 		
-		InOrder order = inOrder(EMF, EM, ET);
+		InOrder order = inOrder(EMF, EM, ET, service);
 		order.verify(EMF).createEntityManager();
 		order.verify(EM).getTransaction();
 		order.verify(ET).begin();
 		order.verify(EM).find(Service.class, serviceId);
-		order.verify(EM).remove(service);
+		order.verify(service).setStatus("inactive");
 		order.verify(ET).commit();
 		order.verify(EM).close();
 	}

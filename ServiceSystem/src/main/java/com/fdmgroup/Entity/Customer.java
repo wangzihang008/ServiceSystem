@@ -19,24 +19,22 @@ import javax.persistence.JoinColumn;
 @Entity
 @Table(name = "service_website_customer")
 public class Customer {
-	
-//	@TableGenerator(name = "customer_gen", 
-//		table = "customer",
-//		allocationSize = 1)
-//	@GeneratedValue(strategy = GenerationType.TABLE, 
-//		generator = "customer_gen")
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long customer_id;
+	@Column(name="customer_id")
+	private long id;
 	@Column(unique=true)
 	private String username;
 	private String password;
 	@Column(unique=true)
 	private String email;
 	private String status;
-	private Calendar create_date_time;
-	private Calendar last_log_date_time;
-	private Calendar last_updated_time;
+	@Column(name="create_date_time")
+	private Calendar createDateTime;
+	@Column(name="last_log_date_time")
+	private Calendar lastLogDateTime;
+	@Column(name="last_updated_time")
+	private Calendar lastUpdatedTime;
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vendor_id")
@@ -62,16 +60,16 @@ public class Customer {
 		this.password = password;
 		this.email = email;
 		this.status = status;
-		this.create_date_time = create_date_time;
-		this.last_log_date_time = last_log_date_time;
-		this.last_updated_time = last_updated_time;
+		this.createDateTime = create_date_time;
+		this.lastLogDateTime = last_log_date_time;
+		this.lastUpdatedTime = last_updated_time;
 	}
 
-	public long getCustomer_id() {
-		return customer_id;
+	public long getId() {
+		return id;
 	}
-	public void setCustomer_id(long customer_id) {
-		this.customer_id = customer_id;
+	public void setId(long id) {
+		this.id = id;
 	}
 	public String getUsername() {
 		return username;
@@ -97,23 +95,23 @@ public class Customer {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public Calendar getCreate_date_time() {
-		return create_date_time;
+	public Calendar getCreateDateTime() {
+		return createDateTime;
 	}
-	public void setCreate_date_time(Calendar create_date_time) {
-		this.create_date_time = create_date_time;
+	public void setCreateDateTime(Calendar create_date_time) {
+		this.createDateTime = create_date_time;
 	}
-	public Calendar getLast_log_date_time() {
-		return last_log_date_time;
+	public Calendar getLastLogDateTime() {
+		return lastLogDateTime;
 	}
-	public void setLast_log_date_time(Calendar last_log_date_time) {
-		this.last_log_date_time = last_log_date_time;
+	public void setLastLogDateTime(Calendar last_log_date_time) {
+		this.lastLogDateTime = last_log_date_time;
 	}
-	public Calendar getLast_updated_time() {
-		return last_updated_time;
+	public Calendar getLastUpdatedTime() {
+		return lastUpdatedTime;
 	}
-	public void setLast_updated_time(Calendar last_updated_time) {
-		this.last_updated_time = last_updated_time;
+	public void setLastUpdatedTime(Calendar last_updated_time) {
+		this.lastUpdatedTime = last_updated_time;
 	}
 	public List<Vendor> getFavouriteVendors() {
 		return favouriteVendors;
@@ -132,12 +130,12 @@ public class Customer {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((create_date_time == null) ? 0 : create_date_time.hashCode());
-		result = prime * result + (int) (customer_id ^ (customer_id >>> 32));
+		result = prime * result + ((createDateTime == null) ? 0 : createDateTime.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((favouriteVendors == null) ? 0 : favouriteVendors.hashCode());
-		result = prime * result + ((last_log_date_time == null) ? 0 : last_log_date_time.hashCode());
-		result = prime * result + ((last_updated_time == null) ? 0 : last_updated_time.hashCode());
+		result = prime * result + ((lastLogDateTime == null) ? 0 : lastLogDateTime.hashCode());
+		result = prime * result + ((lastUpdatedTime == null) ? 0 : lastUpdatedTime.hashCode());
 		result = prime * result + ((orders == null) ? 0 : orders.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
@@ -155,12 +153,12 @@ public class Customer {
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
-		if (create_date_time == null) {
-			if (other.create_date_time != null)
+		if (createDateTime == null) {
+			if (other.createDateTime != null)
 				return false;
-		} else if (!create_date_time.equals(other.create_date_time))
+		} else if (!createDateTime.equals(other.createDateTime))
 			return false;
-		if (customer_id != other.customer_id)
+		if (id != other.id)
 			return false;
 		if (email == null) {
 			if (other.email != null)
@@ -172,15 +170,15 @@ public class Customer {
 				return false;
 		} else if (!favouriteVendors.equals(other.favouriteVendors))
 			return false;
-		if (last_log_date_time == null) {
-			if (other.last_log_date_time != null)
+		if (lastLogDateTime == null) {
+			if (other.lastLogDateTime != null)
 				return false;
-		} else if (!last_log_date_time.equals(other.last_log_date_time))
+		} else if (!lastLogDateTime.equals(other.lastLogDateTime))
 			return false;
-		if (last_updated_time == null) {
-			if (other.last_updated_time != null)
+		if (lastUpdatedTime == null) {
+			if (other.lastUpdatedTime != null)
 				return false;
-		} else if (!last_updated_time.equals(other.last_updated_time))
+		} else if (!lastUpdatedTime.equals(other.lastUpdatedTime))
 			return false;
 		if (orders == null) {
 			if (other.orders != null)
@@ -212,12 +210,9 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [customer_id=" + customer_id + ", username=" + username + ", password=" + password + ", email="
-				+ email + ", status=" + status + ", create_date_time=" + create_date_time + ", last_log_date_time="
-				+ last_log_date_time + ", last_updated_time=" + last_updated_time + "]";
+		return "Customer [id=" + id + ", username=" + username + ", password=" + password + ", email="
+				+ email + ", status=" + status + ", createDateTime=" + createDateTime + ", lastLogDateTime="
+				+ lastLogDateTime + ", lastUpdatedTime=" + lastUpdatedTime + "]";
 	}
-	
-	
-	
-	
+
 }

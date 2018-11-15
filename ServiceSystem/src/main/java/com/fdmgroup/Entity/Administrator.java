@@ -1,5 +1,6 @@
 package com.fdmgroup.Entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,19 +12,15 @@ import javax.persistence.TableGenerator;
 @Table(name = "admin")
 public class Administrator {
 	@Id
-//	@TableGenerator(name = "admin_gen", 
-//			table = "admin",
-//			pkColumnName = "admin_id", 
-//			valueColumnName = "admin_id",
-//			allocationSize = 1)
-//	@GeneratedValue(strategy = GenerationType.TABLE, 
-//			generator = "admin_gen")
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long admin_id;
+	@Column(name="admin_id")
+	private long id;
 	private String username;
 	private String password;
-	private String first_name;
-	private String last_name;
+	@Column(name="first_name")
+	private String firstName;
+	@Column(name="last_name")
+	private String lastName;
 	private String status;
 	public String getStatus() {
 		return status;
@@ -31,11 +28,11 @@ public class Administrator {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public long getAdmin_id() {
-		return admin_id;
+	public long getId() {
+		return id;
 	}
-	public void setAdmin_id(long admin_id) {
-		this.admin_id = admin_id;
+	public void setId(long Id) {
+		this.id = Id;
 	}
 	public String getUsername() {
 		return username;
@@ -49,17 +46,17 @@ public class Administrator {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getFirst_name() {
-		return first_name;
+	public String getFirstName() {
+		return firstName;
 	}
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
+	public void setFirstName(String first_name) {
+		this.firstName = first_name;
 	}
-	public String getLast_name() {
-		return last_name;
+	public String getLastName() {
+		return lastName;
 	}
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+	public void setLastName(String last_name) {
+		this.lastName = last_name;
 	}
 	
 	public Administrator() {
@@ -71,17 +68,17 @@ public class Administrator {
 		super();
 		this.username = username;
 		this.password = password;
-		this.first_name = first_name;
-		this.last_name = last_name;
+		this.firstName = first_name;
+		this.lastName = last_name;
 		this.status = status;
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (admin_id ^ (admin_id >>> 32));
-		result = prime * result + ((first_name == null) ? 0 : first_name.hashCode());
-		result = prime * result + ((last_name == null) ? 0 : last_name.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
@@ -96,17 +93,17 @@ public class Administrator {
 		if (getClass() != obj.getClass())
 			return false;
 		Administrator other = (Administrator) obj;
-		if (admin_id != other.admin_id)
+		if (id != other.id)
 			return false;
-		if (first_name == null) {
-			if (other.first_name != null)
+		if (firstName == null) {
+			if (other.firstName != null)
 				return false;
-		} else if (!first_name.equals(other.first_name))
+		} else if (!firstName.equals(other.firstName))
 			return false;
-		if (last_name == null) {
-			if (other.last_name != null)
+		if (lastName == null) {
+			if (other.lastName != null)
 				return false;
-		} else if (!last_name.equals(other.last_name))
+		} else if (!lastName.equals(other.lastName))
 			return false;
 		if (password == null) {
 			if (other.password != null)
@@ -127,8 +124,8 @@ public class Administrator {
 	}
 	@Override
 	public String toString() {
-		return "Administrator [admin_id=" + admin_id + ", username=" + username + ", password=" + password
-				+ ", first_name=" + first_name + ", last_name=" + last_name + ", status=" + status + "]";
+		return "Administrator [id=" + id + ", username=" + username + ", password=" + password
+				+ ", firstName=" + firstName + ", lastName=" + lastName + ", status=" + status + "]";
 	}
 	
 		

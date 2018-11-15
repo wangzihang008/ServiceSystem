@@ -1,5 +1,6 @@
 package com.fdmgroup.Entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,12 +12,9 @@ import javax.persistence.TableGenerator;
 @Entity
 public class Service {
 	@Id
-	@TableGenerator(name = "service_gen", 
-				table = "service", 
-				allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.TABLE, 
-				generator = "service_gen")
-	private long service_id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="service_id")
+	private long id;
 	private String name;
 	private String currency;
 	private double price;
@@ -26,11 +24,11 @@ public class Service {
 	@JoinColumn(name = "vendor_id")
 	private Vendor vendor;
 	
-	public long getService_id() {
-		return service_id;
+	public long getId() {
+		return id;
 	}
-	public void setService_id(long service_id) {
-		this.service_id = service_id;
+	public void setId(long service_id) {
+		this.id = service_id;
 	}
 	public String getName() {
 		return name;
@@ -83,7 +81,7 @@ public class Service {
 		long temp;
 		temp = Double.doubleToLongBits(price);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + (int) (service_id ^ (service_id >>> 32));
+		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((vendor == null) ? 0 : vendor.hashCode());
 		return result;
@@ -114,7 +112,7 @@ public class Service {
 			return false;
 		if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price))
 			return false;
-		if (service_id != other.service_id)
+		if (id != other.id)
 			return false;
 		if (status == null) {
 			if (other.status != null)
@@ -131,7 +129,7 @@ public class Service {
 	
 	@Override
 	public String toString() {
-		return "Service [service_id=" + service_id + ", name=" + name + ", currency=" + currency + ", price=" + price
+		return "Service [id=" + id + ", name=" + name + ", currency=" + currency + ", price=" + price
 				+ ", per=" + per + ", status=" + status + ", vendor=" + vendor + "]";
 	}
 	

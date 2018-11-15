@@ -12,23 +12,24 @@ import javax.persistence.TableGenerator;
 @Entity
 public class Vendor {
 	@Id
-//	@TableGenerator(name = "vendor_gen", 
-//		table = "vendor",
-//		allocationSize = 1)
-//	@GeneratedValue(strategy = GenerationType.TABLE, 
-//		generator = "vendor_gen")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int vendor_id;
+	@Column(name="vendor_id")
+	private int id;
 	private int verification;
 	private String address;
-	private String phone_number;
+	@Column(name="phone_number")
+	private String phoneNumber;
 	private String status;
-	private String vendor_first_name;
-	private String vendor_middle_name;
-	private String vendor_last_name;
-	private String store_name;
-	@Column(unique = true, nullable = false)
-	private String store_url;
+	@Column(name="vendor_first_name")
+	private String vendorFirstName;
+	@Column(name="vendor_middle_name")
+	private String vendorMiddleName;
+	@Column(name="vendor_last_name")
+	private String vendorLastName;
+	@Column(name="store_name")
+	private String storeName;
+	@Column(name="store_url", unique = true, nullable = false)
+	private String storeUrl;
 	@OneToOne(mappedBy = "vendor", fetch = FetchType.EAGER)
     private Customer customer;
 	
@@ -41,20 +42,20 @@ public class Vendor {
 		super();
 		this.verification = verification;
 		this.address = address;
-		this.phone_number = phone_number;
+		this.phoneNumber = phone_number;
 		this.status = status;
-		this.vendor_first_name = vendor_first_name;
-		this.vendor_middle_name = vendor_middle_name;
-		this.vendor_last_name = vendor_last_name;
-		this.store_name = store_name;
-		this.store_url = store_url;
+		this.vendorFirstName = vendor_first_name;
+		this.vendorMiddleName = vendor_middle_name;
+		this.vendorLastName = vendor_last_name;
+		this.storeName = store_name;
+		this.storeUrl = store_url;
 	}
 
-	public int getVendor_id() {
-		return vendor_id;
+	public int getId() {
+		return id;
 	}
-	public void setVendor_id(int vendor_id) {
-		this.vendor_id = vendor_id;
+	public void setId(int vendor_id) {
+		this.id = vendor_id;
 	}
 	public int getVerification() {
 		return verification;
@@ -68,11 +69,11 @@ public class Vendor {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getPhone_number() {
-		return phone_number;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
-	public void setPhone_number(String phone_number) {
-		this.phone_number = phone_number;
+	public void setPhoneNumber(String phone_number) {
+		this.phoneNumber = phone_number;
 	}
 	public String getStatus() {
 		return status;
@@ -80,35 +81,35 @@ public class Vendor {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getVendor_first_name() {
-		return vendor_first_name;
+	public String getVendorFirstName() {
+		return vendorFirstName;
 	}
-	public void setVendor_first_name(String vendor_first_name) {
-		this.vendor_first_name = vendor_first_name;
+	public void setVendorFirstName(String vendor_first_name) {
+		this.vendorFirstName = vendor_first_name;
 	}
-	public String getVendor_middle_name() {
-		return vendor_middle_name;
+	public String getVendorMiddleName() {
+		return vendorMiddleName;
 	}
-	public void setVendor_middle_name(String vendor_middle_name) {
-		this.vendor_middle_name = vendor_middle_name;
+	public void setVendorMiddleName(String vendor_middle_name) {
+		this.vendorMiddleName = vendor_middle_name;
 	}
-	public String getVendor_last_name() {
-		return vendor_last_name;
+	public String getVendorLastName() {
+		return vendorLastName;
 	}
-	public void setVendor_last_name(String vendor_last_name) {
-		this.vendor_last_name = vendor_last_name;
+	public void setVendorLastName(String vendor_last_name) {
+		this.vendorLastName = vendor_last_name;
 	}
-	public String getStore_name() {
-		return store_name;
+	public String getStoreName() {
+		return storeName;
 	}
-	public void setStore_name(String store_name) {
-		this.store_name = store_name;
+	public void setStoreName(String store_name) {
+		this.storeName = store_name;
 	}
-	public String getStore_url() {
-		return store_url;
+	public String getStoreUrl() {
+		return storeUrl;
 	}
-	public void setStore_url(String store_url) {
-		this.store_url = store_url;
+	public void setStoreUrl(String store_url) {
+		this.storeUrl = store_url;
 	}
 	public Customer getCustomer() {
 		return customer;
@@ -123,14 +124,14 @@ public class Vendor {
 		int result = 1;
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((customer == null) ? 0 : customer.hashCode());
-		result = prime * result + ((phone_number == null) ? 0 : phone_number.hashCode());
+		result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		result = prime * result + ((store_name == null) ? 0 : store_name.hashCode());
-		result = prime * result + ((store_url == null) ? 0 : store_url.hashCode());
-		result = prime * result + ((vendor_first_name == null) ? 0 : vendor_first_name.hashCode());
-		result = prime * result + vendor_id;
-		result = prime * result + ((vendor_last_name == null) ? 0 : vendor_last_name.hashCode());
-		result = prime * result + ((vendor_middle_name == null) ? 0 : vendor_middle_name.hashCode());
+		result = prime * result + ((storeName == null) ? 0 : storeName.hashCode());
+		result = prime * result + ((storeUrl == null) ? 0 : storeUrl.hashCode());
+		result = prime * result + ((vendorFirstName == null) ? 0 : vendorFirstName.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((vendorLastName == null) ? 0 : vendorLastName.hashCode());
+		result = prime * result + ((vendorMiddleName == null) ? 0 : vendorMiddleName.hashCode());
 		result = prime * result + verification;
 		return result;
 	}
@@ -153,42 +154,42 @@ public class Vendor {
 				return false;
 		} else if (!customer.equals(other.customer))
 			return false;
-		if (phone_number == null) {
-			if (other.phone_number != null)
+		if (phoneNumber == null) {
+			if (other.phoneNumber != null)
 				return false;
-		} else if (!phone_number.equals(other.phone_number))
+		} else if (!phoneNumber.equals(other.phoneNumber))
 			return false;
 		if (status == null) {
 			if (other.status != null)
 				return false;
 		} else if (!status.equals(other.status))
 			return false;
-		if (store_name == null) {
-			if (other.store_name != null)
+		if (storeName == null) {
+			if (other.storeName != null)
 				return false;
-		} else if (!store_name.equals(other.store_name))
+		} else if (!storeName.equals(other.storeName))
 			return false;
-		if (store_url == null) {
-			if (other.store_url != null)
+		if (storeUrl == null) {
+			if (other.storeUrl != null)
 				return false;
-		} else if (!store_url.equals(other.store_url))
+		} else if (!storeUrl.equals(other.storeUrl))
 			return false;
-		if (vendor_first_name == null) {
-			if (other.vendor_first_name != null)
+		if (vendorFirstName == null) {
+			if (other.vendorFirstName != null)
 				return false;
-		} else if (!vendor_first_name.equals(other.vendor_first_name))
+		} else if (!vendorFirstName.equals(other.vendorFirstName))
 			return false;
-		if (vendor_id != other.vendor_id)
+		if (id != other.id)
 			return false;
-		if (vendor_last_name == null) {
-			if (other.vendor_last_name != null)
+		if (vendorLastName == null) {
+			if (other.vendorLastName != null)
 				return false;
-		} else if (!vendor_last_name.equals(other.vendor_last_name))
+		} else if (!vendorLastName.equals(other.vendorLastName))
 			return false;
-		if (vendor_middle_name == null) {
-			if (other.vendor_middle_name != null)
+		if (vendorMiddleName == null) {
+			if (other.vendorMiddleName != null)
 				return false;
-		} else if (!vendor_middle_name.equals(other.vendor_middle_name))
+		} else if (!vendorMiddleName.equals(other.vendorMiddleName))
 			return false;
 		if (verification != other.verification)
 			return false;
@@ -196,10 +197,10 @@ public class Vendor {
 	}
 	@Override
 	public String toString() {
-		return "Vendor [vendor_id=" + vendor_id + ", verification=" + verification + ", address=" + address
-				+ ", phone_number=" + phone_number + ", status=" + status + ", vendor_first_name=" + vendor_first_name
-				+ ", vendor_middle_name=" + vendor_middle_name + ", vendor_last_name=" + vendor_last_name
-				+ ", store_name=" + store_name + ", store_url=" + store_url + ", customer=" + customer + "]";
+		return "Vendor [id=" + id + ", verification=" + verification + ", address=" + address
+				+ ", phoneNumber=" + phoneNumber + ", status=" + status + ", vendorFirstName=" + vendorFirstName
+				+ ", vendorMiddleName=" + vendorMiddleName + ", vendorLastName=" + vendorLastName
+				+ ", storeName=" + storeName + ", storeUrl=" + storeUrl + ", customer=" + customer + "]";
 	}
 	
 	

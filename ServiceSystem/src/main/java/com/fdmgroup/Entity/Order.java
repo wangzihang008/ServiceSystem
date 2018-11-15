@@ -2,6 +2,7 @@ package com.fdmgroup.Entity;
 
 import java.util.Calendar;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,14 +15,13 @@ import javax.persistence.TableGenerator;
 @Entity
 public class Order {
 	@Id
-	@TableGenerator(name = "order_gen", 
-		table = "order",
-		allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.TABLE, 
-		generator = "order_gen")
-	private long order_id;
-	private Calendar appointment_date_time;
-	private Calendar last_updated_date_time;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="order_id")
+	private long id;
+	@Column(name="appointment_date_time")
+	private Calendar appointmentDateTime;
+	@Column(name="last_updated_date_time")
+	private Calendar lastUpdatedDateTime;
 	private String status;
 	@ManyToOne
     @JoinColumn(name = "service_id")
@@ -30,23 +30,23 @@ public class Order {
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
 	
-	public long getOrder_id() {
-		return order_id;
+	public long getId() {
+		return id;
 	}
-	public void setOrder_id(long order_id) {
-		this.order_id = order_id;
+	public void setId(long order_id) {
+		this.id = order_id;
 	}
-	public Calendar getAppointment_date_time() {
-		return appointment_date_time;
+	public Calendar getAppointmentDateTime() {
+		return appointmentDateTime;
 	}
-	public void setAppointment_date_time(Calendar appointment_date_time) {
-		this.appointment_date_time = appointment_date_time;
+	public void setAppointmentDateTime(Calendar appointment_date_time) {
+		this.appointmentDateTime = appointment_date_time;
 	}
-	public Calendar getLast_updated_date_time() {
-		return last_updated_date_time;
+	public Calendar getLastUpdatedDateTime() {
+		return lastUpdatedDateTime;
 	}
-	public void setLast_updated_date_time(Calendar last_updated_date_time) {
-		this.last_updated_date_time = last_updated_date_time;
+	public void setLastUpdatedDateTime(Calendar last_updated_date_time) {
+		this.lastUpdatedDateTime = last_updated_date_time;
 	}
 	public String getStatus() {
 		return status;
@@ -75,10 +75,10 @@ public class Order {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((appointment_date_time == null) ? 0 : appointment_date_time.hashCode());
+		result = prime * result + ((appointmentDateTime == null) ? 0 : appointmentDateTime.hashCode());
 		result = prime * result + ((customer == null) ? 0 : customer.hashCode());
-		result = prime * result + ((last_updated_date_time == null) ? 0 : last_updated_date_time.hashCode());
-		result = prime * result + (int) (order_id ^ (order_id >>> 32));
+		result = prime * result + ((lastUpdatedDateTime == null) ? 0 : lastUpdatedDateTime.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((service == null) ? 0 : service.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		return result;
@@ -93,22 +93,22 @@ public class Order {
 		if (getClass() != obj.getClass())
 			return false;
 		Order other = (Order) obj;
-		if (appointment_date_time == null) {
-			if (other.appointment_date_time != null)
+		if (appointmentDateTime == null) {
+			if (other.appointmentDateTime != null)
 				return false;
-		} else if (!appointment_date_time.equals(other.appointment_date_time))
+		} else if (!appointmentDateTime.equals(other.appointmentDateTime))
 			return false;
 		if (customer == null) {
 			if (other.customer != null)
 				return false;
 		} else if (!customer.equals(other.customer))
 			return false;
-		if (last_updated_date_time == null) {
-			if (other.last_updated_date_time != null)
+		if (lastUpdatedDateTime == null) {
+			if (other.lastUpdatedDateTime != null)
 				return false;
-		} else if (!last_updated_date_time.equals(other.last_updated_date_time))
+		} else if (!lastUpdatedDateTime.equals(other.lastUpdatedDateTime))
 			return false;
-		if (order_id != other.order_id)
+		if (id != other.id)
 			return false;
 		if (service == null) {
 			if (other.service != null)
@@ -125,8 +125,8 @@ public class Order {
 	
 	@Override
 	public String toString() {
-		return "Order [order_id=" + order_id + ", appointment_date_time=" + appointment_date_time
-				+ ", last_updated_date_time=" + last_updated_date_time + ", status=" + status + ", service=" + service
+		return "Order [id=" + id + ", appointmentDateTime=" + appointmentDateTime
+				+ ", lastUpdatedDateTime=" + lastUpdatedDateTime + ", status=" + status + ", service=" + service
 				+ ", customer=" + customer + "]";
 	}
 	

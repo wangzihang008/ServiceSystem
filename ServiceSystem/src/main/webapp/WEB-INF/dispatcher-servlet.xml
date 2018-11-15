@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.1.xsd
+    http://www.springframework.org/schema/webmvc
+    http://www.springframework.org/schema/webmvc/spring-context-3.1.xsd">
+
+	<context:component-scan
+		base-package="com.fdmgroup.Controller" />
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+
+	<bean id="emfBean" class="javax.persistence.Persistence"
+		factory-method="createEntityManagerFactory">
+		<constructor-arg value="EMF" />
+	</bean>
+	
+	<bean id="calendarBean" class="java.util.Calendar"
+		factory-method="getInstance"/>
+
+	<bean id="customerDaoBean"
+		class="com.fdmgroup.Entity.Dao.CustomerDao" />
+
+	<bean id="orderDaoBean"
+		class="com.fdmgroup.Entity.Dao.OrderDao" />
+
+	<bean id="serviceDaoBean"
+		class="com.fdmgroup.Entity.Dao.ServiceDao" />
+
+	<bean id="vendorDaoBean"
+		class="com.fdmgroup.Entity.Dao.VendorDao" />
+
+</beans>

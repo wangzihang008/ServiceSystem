@@ -7,34 +7,23 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Register</title>
+<title>Login</title>
 </head>
 <body>
-	
-	<c:if test="${ErrorMessage == ''}">
-		<h4>Register Success</h4>
-		<a href="/">Go Back To Home Page</a>
-		<a href="/dashboard">Go Back To Dashboard Page</a>
+	<c:if test="${ErrorMessage == '' || LoginStatus == 'success'}">
+		<h4>Login Success</h4>
+		<a href="">Go Back To Home Page</a>
+		<a href="dashboard">Go Back To Dashboard Page</a>
 	</c:if>
-	<c:if test="${ErrorMessage != ''}">
-		<c:if test="${ErrorMessage != null}">
-			<h4>${ErrorMessage}</h4>
-		</c:if>
-		<c:if test="${ErrorMessage == null}">
-			<h4>Register</h4>
-		</c:if>
-		<div id="register_area" class="">
-			<h2>Register</h2>
-			<sf:form action="register" method="POST"
-				modelAttribute="registerCustomer">
+	<c:if test="${ErrorMessage != '' && LoginStatus == 'fail'}">
+		<h4>${ErrorMessage}</h4>
+		<div id="login_area" class="">
+			<h2>Login</h2>
+			<sf:form action="login" method="POST" modelAttribute="loginCustomer">
 				<div>
 					<p>USERNAME:</p>
 					<sf:input type="text" placeholder="Input Your Username"
 						path="username" />
-				</div>
-				<div>
-					<p>EMAIL:</p>
-					<sf:input type="text" placeholder="Input Your Email" path="email" />
 				</div>
 				<div>
 					<p>PASSWORD:</p>
@@ -43,6 +32,8 @@
 				</div>
 				<input type="submit" value="SUBMIT">
 			</sf:form>
+			<a href="index">Go Back To Home Page</a>
+			<a href="register">Go Register</a>
 		</div>
 	</c:if>
 </body>

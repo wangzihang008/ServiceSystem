@@ -1,5 +1,6 @@
 package com.fdmgroup.Entity.Dao;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -7,13 +8,22 @@ import javax.persistence.EntityTransaction;
 import com.fdmgroup.Entity.Order;
 
 public class OrderDao {
-
+	@Resource(name="emfBean")
 	private EntityManagerFactory emf;
 
 	public OrderDao(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
 
+	public OrderDao() {
+		super();
+	}
+
+	/**
+	 * 
+	 * @param id
+	 * @return order with id
+	 */
 	public Order get(long id) {
 		EntityManager em = emf.createEntityManager();
 		Order order = em.find(Order.class, id);
@@ -21,6 +31,10 @@ public class OrderDao {
 		return order;
 	}
 
+	/**
+	 * insert an order record into order table
+	 * @param order
+	 */
 	public void add(Order order) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
@@ -30,13 +44,18 @@ public class OrderDao {
 		em.close();
 	}
 	
+	/**
+	 * update record with id and data of object of order
+	 * @param id
+	 * @param order
+	 */
 	public void update(long id, Order order) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 		Order old = em.find(Order.class, id);
-		old.setAppointment_date_time(order.getAppointment_date_time());
-		old.setLast_updated_date_time(order.getLast_updated_date_time());
+		old.setAppointmentDateTime(order.getAppointmentDateTime());
+		old.setLastUpdatedDateTime(order.getLastUpdatedDateTime());
 		old.setStatus(order.getStatus());
 		old.setCustomer(order.getCustomer());
 		old.setService(order.getService());
@@ -44,12 +63,16 @@ public class OrderDao {
 		em.close();
 	}
 
+	/**
+	 * set a record as "inactive"
+	 * @param id
+	 */
 	public void delete(long id) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 		Order order = em.find(Order.class, id);
-		em.remove(order);
+		order.setStatus("inactive");
 		et.commit();
 		em.close();
 	}

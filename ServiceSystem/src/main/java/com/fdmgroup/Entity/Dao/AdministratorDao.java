@@ -17,6 +17,12 @@ public class AdministratorDao {
 		this.emf = emf;
 	}
 
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @return administrator who hold the username and password
+	 */
 	public List getAdministrator(String username, String password) {
 		EntityManager em = emf.createEntityManager();
 		String queryStr = "select e.admin_id, e.status, e.first_name, e.last_name from admin e "
@@ -28,6 +34,10 @@ public class AdministratorDao {
 		
 	}
 	
+	/**
+	 * add an admin account to database
+	 * @param administrator
+	 */
 	public void add(Administrator administrator) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();

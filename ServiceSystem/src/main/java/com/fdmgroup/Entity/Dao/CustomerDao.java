@@ -1,8 +1,10 @@
 package com.fdmgroup.Entity.Dao;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -12,12 +14,19 @@ import javax.persistence.TypedQuery;
 import com.fdmgroup.Entity.Customer;
 
 public class CustomerDao {
+	@Resource(name="emfBean")
 	private EntityManagerFactory emf;
+	@Resource(name="calendarBean")
+	private Calendar calendar;
 	
 	public CustomerDao(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
 	
+	public CustomerDao() {
+		super();
+	}
+
 	/**
 	 * 
 	 * @param id
@@ -57,9 +66,9 @@ public class CustomerDao {
 		old.setUsername(customer.getUsername());
 		old.setPassword(customer.getPassword());
 		old.setStatus(customer.getStatus());
-		old.setLast_updated_time(customer.getLast_updated_time());
-		old.setLast_log_date_time(customer.getLast_log_date_time());
-		old.setCreate_date_time(customer.getCreate_date_time());
+		old.setLastUpdatedTime(customer.getLastUpdatedTime());
+		old.setLastLogDateTime(customer.getLastLogDateTime());
+		old.setCreateDateTime(customer.getCreateDateTime());
 		old.setVendor(customer.getVendor());
 		et.commit();
 		em.close();
@@ -74,7 +83,7 @@ public class CustomerDao {
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 		Customer customer = em.find(Customer.class, id);
-		em.remove(customer);
+		customer.setStatus("inactive");
 		et.commit();
 		em.close();
 		
@@ -120,5 +129,15 @@ public class CustomerDao {
 		List<Customer> resultList = query.getResultList();
 		em.close();
 		return resultList;
+	}
+	
+	public void createCustomerThenAdd(Customer customer) {
+//		Calendar calendar = Calendar.getInstance();
+		String str = "active";
+		customer.setLastLogDateTime(calendar);
+		customer.setLastUpdatedTime(calendar);
+		customer.setCreateDateTime(calendar);
+		customer.setStatus(str);
+		add(customer);
 	}
 }

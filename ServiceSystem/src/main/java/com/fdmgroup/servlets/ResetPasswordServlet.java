@@ -36,7 +36,7 @@ public class ResetPasswordServlet extends HttpServlet{
 			Long id = Long.parseLong((String) session.getAttribute("active_user_id"));
 			Customer customer = cd.get(id);
 			customer.setPassword(newPwd);
-			customer.setLast_updated_time(calendar);
+			customer.setLastUpdatedTime(calendar);
 			cd.update(id, customer);
 		}else {
 			session.setAttribute("ResetPasswordStatus", "fail");

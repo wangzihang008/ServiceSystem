@@ -6,20 +6,34 @@ import javax.persistence.EntityTransaction;
 
 import static org.mockito.Mockito.*;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InOrder;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import com.fdmgroup.Entity.Order;
 
 public class OrderDaoTest {
+	@Mock // same as = mock(EntityManagerFactory.class)
+	private EntityManagerFactory EMF;
+	@InjectMocks
+	private OrderDao orderDao = new OrderDao();
+	
+	@Before
+	public void startInjectionMock() {
+		MockitoAnnotations.initMocks(this);
+	}
+	
 	@Test
 	public void Given_OrderDao_When_getOrder_returnOrderAndCleansUpResources() {
-		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
+//		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
 		EntityManager EM = mock(EntityManager.class);
 		
 		when(EMF.createEntityManager()).thenReturn(EM);
 		
-		OrderDao orderDao = new OrderDao(EMF);
+//		OrderDao orderDao = new OrderDao(EMF);
 		long orderId = 123;
 		orderDao.get(orderId);
 		
@@ -31,7 +45,7 @@ public class OrderDaoTest {
 	
 	@Test
 	public void Given_OrderDao_When_addOrder_CleansUpResources() {
-		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
+//		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
 		EntityManager EM = mock(EntityManager.class);
 		EntityTransaction ET = mock(EntityTransaction.class);
 		Order order = mock(Order.class);
@@ -39,7 +53,7 @@ public class OrderDaoTest {
 		when(EMF.createEntityManager()).thenReturn(EM);
 		when(EM.getTransaction()).thenReturn(ET);
 		
-		OrderDao orderDao = new OrderDao(EMF);
+//		OrderDao orderDao = new OrderDao(EMF);
 		orderDao.add(order);
 		
 		InOrder inorder = inOrder(EMF, EM, ET);
@@ -53,7 +67,7 @@ public class OrderDaoTest {
 	
 	@Test
 	public void Given_OrderDao_When_updateOrder_CleansUpResources() {
-		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
+//		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
 		EntityManager EM = mock(EntityManager.class);
 		EntityTransaction ET = mock(EntityTransaction.class);
 		Order order = mock(Order.class);
@@ -63,15 +77,15 @@ public class OrderDaoTest {
 		long orderId = 123;
 		when(EM.find(Order.class, orderId)).thenReturn(order);
 		
-		OrderDao orderDao = new OrderDao(EMF);
+//		OrderDao orderDao = new OrderDao(EMF);
 		orderDao.update(orderId, order);
 		
 		InOrder inorder = inOrder(EMF, EM, ET, order);
 		inorder.verify(EMF).createEntityManager();
 		inorder.verify(EM).getTransaction();
 		inorder.verify(ET).begin();
-		inorder.verify(order).setAppointment_date_time(order.getAppointment_date_time());
-		inorder.verify(order).setLast_updated_date_time(order.getLast_updated_date_time());
+		inorder.verify(order).setAppointmentDateTime(order.getAppointmentDateTime());
+		inorder.verify(order).setLastUpdatedDateTime(order.getLastUpdatedDateTime());
 		inorder.verify(order).setStatus(order.getStatus());
 		inorder.verify(order).setCustomer(order.getCustomer());
 		inorder.verify(order).setService(order.getService());
@@ -81,7 +95,7 @@ public class OrderDaoTest {
 	
 	@Test
 	public void Given_OrderDao_When_deleteOrder_CleansUpResources() {
-		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
+//		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
 		EntityManager EM = mock(EntityManager.class);
 		EntityTransaction ET = mock(EntityTransaction.class);
 		Order order = mock(Order.class);
@@ -91,15 +105,15 @@ public class OrderDaoTest {
 		long orderId = 123;
 		when(EM.find(Order.class, orderId)).thenReturn(order);
 		
-		OrderDao orderDao = new OrderDao(EMF);
+//		OrderDao orderDao = new OrderDao(EMF);
 		orderDao.delete(orderId);
 		
-		InOrder inorder = inOrder(EMF, EM, ET);
+		InOrder inorder = inOrder(EMF, EM, ET, order);
 		inorder.verify(EMF).createEntityManager();
 		inorder.verify(EM).getTransaction();
 		inorder.verify(ET).begin();
 		inorder.verify(EM).find(Order.class, orderId);
-		inorder.verify(EM).remove(order);
+		inorder.verify(order).setStatus("inactive");
 		inorder.verify(ET).commit();
 		inorder.verify(EM).close();
 	}

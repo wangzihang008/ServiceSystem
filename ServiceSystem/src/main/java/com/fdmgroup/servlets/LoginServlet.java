@@ -30,8 +30,6 @@ public class LoginServlet extends HttpServlet{
 		String username = req.getParameter("username");
 		String password = DigestUtils.md5Hex(req.getParameter("password"));
 		
-		req.setAttribute("luck_numbers", new int [] {1, 4, 6, 2, 7, 8, 3});
-		
 		// better to call a login service class here
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EMF");
 		CustomerDao cd = new CustomerDao(emf);
@@ -42,12 +40,12 @@ public class LoginServlet extends HttpServlet{
 			
 		}else if(customer != null) {
 			session.setAttribute("LoginStatus", "success");
-			session.setAttribute("active_user_id", customer.getCustomer_id());
+			session.setAttribute("active_user_id", customer.getId());
 			session.setAttribute("active_user_name", customer.getUsername());
 			session.setAttribute("active_user_email", customer.getEmail());
 			Calendar calendar = Calendar.getInstance();
-			customer.setLast_log_date_time(calendar);
-			cd.update(customer.getCustomer_id(), customer);
+			customer.setLastLogDateTime(calendar);
+			cd.update(customer.getId(), customer);
 		}else {
 			session.setAttribute("LoginStatus", "fail");
 		}

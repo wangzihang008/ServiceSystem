@@ -15,7 +15,8 @@
 <body>
 	<div class="main">
 		<c:if test="${LoginStatus == 'success'}">
-			<h4>Welcome ${active_user_name}</h4>
+			<h4>Welcome ${ActiveUsername}</h4>
+			<a href="">Go Back To Home Page</a>
 			<div class="side-bar"></div>
 			<div class="content">
 
@@ -23,14 +24,14 @@
 					<h4>Personal Info</h4>
 					<div class="content-block-detail">
 						<div class="content-block-detail">
-							<p>Username : ${active_user_name}</p>
+							<p>Username : ${ActiveUsername}</p>
 						</div>
 						<div class="content-block-detail">
-							<p>Email : ${active_user_email}</p>
+							<p>Email : ${ActiveEmail}</p>
 						</div>
 						<div class="content-block-detail">
-							<a href="">Reset Personal Information</a> <a href="">Reset
-								Password</a>
+							<a href="reset-personal-info">Reset Personal Information</a> <a
+								href="reset-password">Reset Password</a>
 						</div>
 					</div>
 				</div>
@@ -41,6 +42,17 @@
 				<div class="content-block favourite-vednors">
 					<h4>Favorite Vendors</h4>
 					<div class="content-block-detail"></div>
+				</div>
+				<div class="content-block vednor-setting">
+					<h4>Vendor</h4>
+					<div class="content-block-detail">
+						<c:if test="${VendorStatus == 'active'}">
+							<a href="/vendor/dashboard">Go To Vendor Dashboard</a>
+						</c:if>
+						<c:if test="${VendorStatus == 'inactive'}">
+							<a href="/vendor/apply">Apply To Be A Vendor</a>
+						</c:if>
+					</div>
 				</div>
 			</div>
 		</c:if>

@@ -5,19 +5,38 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InOrder;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import com.fdmgroup.Entity.Customer;
+import com.fdmgroup.Entity.Dao.CustomerDao;
 
 import static org.mockito.Mockito.*;
 
+import java.util.Calendar;
+
 public class CustomerDaoTest {
+	@Mock // same as = mock(EntityManagerFactory.class)
+	private EntityManagerFactory EMF;
+	@Mock // same as = mock(EntityManagerFactory.class)
+	private Calendar calendar;
+	@InjectMocks
+	private CustomerDao customerDao = new CustomerDao();
+	
+	@Before
+	public void startInjectionMock() {
+		MockitoAnnotations.initMocks(this);
+	}
+	
 	@Test
 	public void Given_CustomerDao_When_getCustomer_returnCustomerAndCleansUpResources() {
-		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
+//		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
 		EntityManager EM = mock(EntityManager.class);
-		CustomerDao customerDao = new CustomerDao(EMF);
+//		CustomerDao customerDao = new CustomerDao(EMF);
 
 		when(EMF.createEntityManager()).thenReturn(EM);
 
@@ -33,7 +52,7 @@ public class CustomerDaoTest {
 
 	@Test
 	public void Given_CustomerDao_When_addCustomer_CleansUpReources() {
-		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
+//		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
 		EntityManager EM = mock(EntityManager.class);
 		EntityTransaction ET = mock(EntityTransaction.class);
 		Customer customer = mock(Customer.class);
@@ -41,7 +60,7 @@ public class CustomerDaoTest {
 		when(EMF.createEntityManager()).thenReturn(EM);
 		when(EM.getTransaction()).thenReturn(ET);
 
-		CustomerDao customerDao = new CustomerDao(EMF);
+//		CustomerDao customerDao = new CustomerDao(EMF);
 		customerDao.add(customer);
 
 		InOrder order = inOrder(EMF, EM, ET);
@@ -55,7 +74,7 @@ public class CustomerDaoTest {
 
 	@Test
 	public void Given_CustomerDao_When_updateCustomer_CleansUpResources() {
-		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
+//		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
 		EntityManager EM = mock(EntityManager.class);
 		EntityTransaction ET = mock(EntityTransaction.class);
 		Customer customer = mock(Customer.class);
@@ -65,7 +84,7 @@ public class CustomerDaoTest {
 		long customerId = 123;
 		when(EM.find(Customer.class, customerId)).thenReturn(customer);
 
-		CustomerDao customerDao = new CustomerDao(EMF);
+//		CustomerDao customerDao = new CustomerDao(EMF);
 		customerDao.update(customerId, customer);
 
 		InOrder order = inOrder(EMF, EM, ET, customer);
@@ -77,9 +96,9 @@ public class CustomerDaoTest {
 		order.verify(customer).setUsername(customer.getUsername());
 		order.verify(customer).setPassword(customer.getPassword());
 		order.verify(customer).setStatus(customer.getStatus());
-		order.verify(customer).setLast_updated_time(customer.getLast_updated_time());
-		order.verify(customer).setLast_log_date_time(customer.getLast_log_date_time());
-		order.verify(customer).setCreate_date_time(customer.getCreate_date_time());
+		order.verify(customer).setLastUpdatedTime(customer.getLastUpdatedTime());
+		order.verify(customer).setLastLogDateTime(customer.getLastLogDateTime());
+		order.verify(customer).setCreateDateTime(customer.getCreateDateTime());
 		order.verify(ET).commit();
 		order.verify(EM).close();
 	}
@@ -87,7 +106,7 @@ public class CustomerDaoTest {
 	@Test
 	public void Given_CustomerDao_When_deleteCustomer_CleansUpReources() {
 		long customerId = 123;
-		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
+//		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
 		EntityManager EM = mock(EntityManager.class);
 		EntityTransaction ET = mock(EntityTransaction.class);
 		Customer customer = mock(Customer.class);
@@ -96,24 +115,24 @@ public class CustomerDaoTest {
 		when(EM.getTransaction()).thenReturn(ET);
 		when(EM.find(Customer.class, customerId)).thenReturn(customer);
 
-		CustomerDao customerDao = new CustomerDao(EMF);
+//		CustomerDao customerDao = new CustomerDao(EMF);
 		customerDao.delete(customerId);
 
-		InOrder order = inOrder(EMF, EM, ET);
+		InOrder order = inOrder(EMF, EM, ET, customer);
 		order.verify(EMF).createEntityManager();
 		order.verify(EM).getTransaction();
 		order.verify(ET).begin();
 		order.verify(EM).find(Customer.class, customerId);
-		order.verify(EM).remove(customer);
+		order.verify(customer).setStatus("inactive");
 		order.verify(ET).commit();
 		order.verify(EM).close();
 	}
 
 	@Test
 	public void Given_CustomerDao_When_getCustomerByUsernameAndPassword_returnCustomerAndCleansUpResources() {
-		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
+//		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
 		EntityManager EM = mock(EntityManager.class);
-		CustomerDao customerDao = new CustomerDao(EMF);
+//		CustomerDao customerDao = new CustomerDao(EMF);
 		TypedQuery<Customer> query = mock(TypedQuery.class);
 		String queryStr = "SELECT c FROM Customer c WHERE c.username=:username and c.password=:password";
 
@@ -134,9 +153,9 @@ public class CustomerDaoTest {
 	
 	@Test
 	public void Given_CustomerDao_When_getByUsernameOrEmail_returnCustomerAndCleansUpResources() {
-		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
+//		EntityManagerFactory EMF = mock(EntityManagerFactory.class);
 		EntityManager EM = mock(EntityManager.class);
-		CustomerDao customerDao = new CustomerDao(EMF);
+//		CustomerDao customerDao = new CustomerDao(EMF);
 		TypedQuery<Customer> query = mock(TypedQuery.class);
 		String queryStr = "SELECT c FROM Customer c WHERE c.username=:username or c.email=:email";
 
@@ -154,4 +173,23 @@ public class CustomerDaoTest {
 		order.verify(EM).close();
 
 	}
+	
+	@Test
+	public void Given_CustomerDao_When_createCustomerAndAdd_Then_callAddAndCleansUpResources() {
+		EntityManager EM = mock(EntityManager.class);
+		EntityTransaction ET = mock(EntityTransaction.class);
+		Customer customer = mock(Customer.class);
+		String str = "active";
+		
+		when(EMF.createEntityManager()).thenReturn(EM);
+		when(EM.getTransaction()).thenReturn(ET);
+		customerDao.createCustomerThenAdd(customer);
+		
+		InOrder order = inOrder(customer);
+		order.verify(customer).setLastLogDateTime(calendar);
+		order.verify(customer).setLastUpdatedTime(calendar);
+		order.verify(customer).setCreateDateTime(calendar);
+		order.verify(customer).setStatus(str);
+	}
+	
 }

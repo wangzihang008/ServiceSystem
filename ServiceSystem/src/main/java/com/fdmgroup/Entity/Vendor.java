@@ -203,5 +203,8 @@ public class Vendor {
 				+ ", storeName=" + storeName + ", storeUrl=" + storeUrl + ", customer=" + customer + "]";
 	}
 	
-	
+	public boolean isInfoMissing() {
+		return "".equals(address) || "".equals(phoneNumber) || "".equals(storeName) || "".equals(vendorFirstName) ||
+				"".equals(vendorLastName);
+	}
 }

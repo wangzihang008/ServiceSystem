@@ -30,7 +30,7 @@ public class RegisterController {
 	public String goToRegister(Customer customer, HttpSession hs) {
 		// TODO Auto-generated method stub
 		if("".equals(customer.getEmail()) || "".equals(customer.getUsername()) || "".equals(customer.getPassword())) {
-			hs.setAttribute("error_message", "Thre is some information missing. Please try again.");
+			hs.setAttribute("ErrorMessage", "Thre is some information missing. Please try again.");
 		}else if(cDao.getByUsernameOrEmail(customer.getUsername(), customer.getEmail()).size() < 1) {
 			cDao.createCustomerThenAdd(customer);
 			Customer c = cDao.getByUsernameAndPassword(customer.getUsername(), customer.getPassword());
@@ -41,7 +41,7 @@ public class RegisterController {
 			hs.setAttribute("LoginStatus", "success");
 			return "dashboard";
 		}else {
-			hs.setAttribute("error_message", "Username or Email has been used for registeration. Please try again.");
+			hs.setAttribute("ErrorMessage", "Username or Email has been used for registeration. Please try again.");
 		}
 		
 		return "register";

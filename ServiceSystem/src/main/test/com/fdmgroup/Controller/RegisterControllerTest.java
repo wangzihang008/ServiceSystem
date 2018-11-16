@@ -75,7 +75,7 @@ public class RegisterControllerTest {
 
 		String nextPage = rc.goToRegister(customer, hs);
 		
-		assertEquals("dashboard", nextPage);
+		assertEquals("register", nextPage);
 	}
 	
 	@Test

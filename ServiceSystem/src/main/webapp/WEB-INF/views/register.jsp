@@ -13,7 +13,7 @@
 	
 	<c:if test="${ErrorMessage == ''}">
 		<h4>Register Success</h4>
-		<a href="/">Go Back To Home Page</a>
+		<a href="index">Go Back To Home Page</a>
 		<a href="/dashboard">Go Back To Dashboard Page</a>
 	</c:if>
 	<c:if test="${ErrorMessage != ''}">

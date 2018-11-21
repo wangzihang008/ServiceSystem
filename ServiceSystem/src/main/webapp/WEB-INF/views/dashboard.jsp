@@ -58,7 +58,7 @@
 		</c:if>
 		<c:if test="${LoginStatus == 'fail'}">
 			<h4>Username Or Password Is Not Correct</h4>
-			<a href="">Go Back To Home Page</a>
+			<a href="index">Go Back To Home Page</a>
 		</c:if>
 
 	</div>

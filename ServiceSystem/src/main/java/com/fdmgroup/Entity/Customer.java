@@ -214,5 +214,6 @@ public class Customer {
 				+ email + ", status=" + status + ", createDateTime=" + createDateTime + ", lastLogDateTime="
 				+ lastLogDateTime + ", lastUpdatedTime=" + lastUpdatedTime + "]";
 	}
+	
 
 }
